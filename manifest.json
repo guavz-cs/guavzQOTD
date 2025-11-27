@@ -1,0 +1,23 @@
+{
+  "name": "guavz Quote of The Day",
+  "short_name": "guavz QOTD",
+  "descritpion": "A quote a day to keep the gloom away... results may vary, LOL!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1d9bf0",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/double-quotes.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/double-quotes.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

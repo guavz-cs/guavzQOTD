@@ -7,6 +7,7 @@ const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const themeToggle = document.getElementById('themeToggle');
 
+
 function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
@@ -23,8 +24,9 @@ themeToggle.addEventListener('click', function() {
 
 async function fetchQOTD() {
     try {
-        quoteElement.textContent = 'Loading...';
-        authorElement.textContent = '';
+        // Removed 'Loading...' text here, as splash will cover the UI during fetch
+        // quoteElement.textContent = 'Loading...';
+        // authorElement.textContent = '';
 
         const response = await fetch('https://dummyjson.com/quotes/random');
         
@@ -97,18 +99,29 @@ function getTodaysQuote() {
 }
 
 function displayQOTD(){
+    const splash = document.getElementById('splash');
+    splash.classList.remove('hidden');  
+
     const todaysQuote = getTodaysQuote();
     
     if (todaysQuote) {
         quoteElement.textContent = `"${todaysQuote.content}"`;
         authorElement.textContent = `- ${todaysQuote.author}`;
+        setTimeout(() => splash.classList.add('hidden'), 300); 
     } else {
-        fetchQOTD();
+        fetchQOTD().then(() => {
+            setTimeout(() => splash.classList.add('hidden'), 400);
+        });
     }
 }
 
+// Updated event listener: Show splash before fetch, hide after completion
 newQuoteBtn.addEventListener('click', function() {
-    fetchQOTD();
+    const splash = document.getElementById('splash');
+    splash.classList.remove('hidden');
+    fetchQOTD().then(() => {
+        setTimeout(() => splash.classList.add('hidden'), 300);
+    });
 });
 
 shareBtn.addEventListener('click', function() {

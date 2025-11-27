@@ -1,4 +1,4 @@
-const CACHE_NAME = 'guavz-qotd-v4';
+const CACHE_NAME = 'guavz-qotd-v5';
 
 const FILES_TO_CACHE = [
     '/',

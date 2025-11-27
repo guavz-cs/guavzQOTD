@@ -12,17 +12,27 @@ async function fetchQOTD() {
         quoteElement.textContent = 'Loading...';
         authorElement.textContent = '';
 
-        const response = await fetch('https://api.quotable.io/random');
-        const data = await response.json();
-
-        quoteElement.textContent = `"${data.content}"`;
-        authorElement.textContent = `- ${data.author}`;
+        const response = await fetch('https://zenquotes.io/api/random');
         
-        saveTodaysQuote(data);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        const quote = data[0]; 
+
+        quoteElement.textContent = `"${quote.q}"`;
+        authorElement.textContent = `- ${quote.a}`;
+        
+        saveTodaysQuote({
+            content: quote.q,
+            author: quote.a
+        });
         updateTimestamp();
 
     } catch (error) {
-        quoteElement.textContent = 'Could not load quote.';
+        console.error('Error fetching quote:', error);
+        quoteElement.textContent = 'Could not load quote. Please try again.';
         authorElement.textContent = '';
     }
 }

@@ -5,6 +5,20 @@ const shareBtn = document.getElementById('shareQOTD');
 const statusElement = document.getElementById('status');
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
+const themeToggle = document.getElementById('themeToggle');
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+    }
+}
+
+themeToggle.addEventListener('click', function() {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+});
 
 
 async function fetchQOTD() {
@@ -192,6 +206,7 @@ window.addEventListener('online', updateStatus);
 window.addEventListener('offline', updateStatus);   
 
 window.addEventListener('load', () => {
+    initTheme();
     updateStatus();
     updateTimestamp();        
     displayQOTD();   

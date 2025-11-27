@@ -12,28 +12,44 @@ async function fetchQOTD() {
         quoteElement.textContent = 'Loading...';
         authorElement.textContent = '';
 
-        const response = await fetch('https://zenquotes.io/api/random');
+        const response = await fetch('https://dummyjson.com/quotes/random');
         
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('API failed');
         }
         
         const data = await response.json();
-        const quote = data[0]; 
 
-        quoteElement.textContent = `"${quote.q}"`;
-        authorElement.textContent = `- ${quote.a}`;
+        quoteElement.textContent = `"${data.quote}"`;
+        authorElement.textContent = `- ${data.author}`;
         
         saveTodaysQuote({
-            content: quote.q,
-            author: quote.a
+            content: data.quote,
+            author: data.author
         });
         updateTimestamp();
 
     } catch (error) {
-        console.error('Error fetching quote:', error);
-        quoteElement.textContent = 'Could not load quote. Please try again.';
-        authorElement.textContent = '';
+        console.error('Error fetching quote, using fallback:', error);
+        
+        const fallbackQuotes = [
+            { content: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { content: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+            { content: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+            { content: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+            { content: "It is during our darkest moments that we must focus to see the light.", author: "Aristotle" },
+            { content: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
+            { content: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+            { content: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" }
+        ];
+        
+        const randomQuote = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+        
+        quoteElement.textContent = `"${randomQuote.content}"`;
+        authorElement.textContent = `- ${randomQuote.author}`;
+        
+        saveTodaysQuote(randomQuote);
+        updateTimestamp();
     }
 }
 

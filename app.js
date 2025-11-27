@@ -104,7 +104,7 @@ shareBtn.addEventListener('click', function() {
     const message = `${quoteText} ${authorText}
     
     Get daily quotes from guavz QOTD
-    Visit: [YOUR_APP_URL_HERE]`;
+    Visit: https://guavz-qotd.vercel.app/`;
 
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
 
